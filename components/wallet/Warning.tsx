@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { Box, Text, Icon, Stack, useColorModeValue } from '@interchain-ui/react';
 
 export type WarningProps = {

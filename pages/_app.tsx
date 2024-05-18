@@ -15,7 +15,6 @@ import { chains, assets } from 'chain-registry';
 import '@interchain-ui/react/styles';
 import '@interchain-ui/react/globalStyles';
 
-
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -60,6 +59,8 @@ function CreateCosmosApp({ Component, pageProps }: AppProps) {
             minHeight="100dvh"
             backgroundColor={useColorModeValue('$white', '$background')}
           >
+            {/* TODO fix type error */}
+            {/* @ts-ignore */}
             <Component {...pageProps} />
           </Box>
         </QueryClientProvider>

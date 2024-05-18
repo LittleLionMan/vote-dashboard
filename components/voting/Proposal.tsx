@@ -3,7 +3,6 @@ import {
   Button,
   GovernanceResultCard,
   GovernanceVoteBreakdown,
-  Table,
   Text,
 } from "@interchain-ui/react";
 import { ProposalType } from "./Voting";
@@ -12,10 +11,10 @@ import {
   getCoin,
   getExponent,
   percent,
-} from "@/utils";
+} from "../../utils";
 import Markdown from "react-markdown";
-import { useState } from "react";
-import { Validator, Delegation } from "@/pages/[chain]/[proposal]";
+import React, { useState } from "react";
+import { Validator, Delegation } from "../../pages/[chain]/[proposal]";
 
 interface FilteredUser {
   userId: number;

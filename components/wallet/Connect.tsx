@@ -1,4 +1,4 @@
-import { MouseEventHandler } from 'react';
+import React, { MouseEventHandler } from 'react';
 import { Button as UIButton, IconName } from '@interchain-ui/react';
 
 export type ButtonProps =  {

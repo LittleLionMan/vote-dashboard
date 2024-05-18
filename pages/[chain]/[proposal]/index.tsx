@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { Container, Box, Tabs } from "@interchain-ui/react";
-import { useState, useEffect } from "react";
-import { Proposal, Sandbox, MySpace, WeightedVoting, ProposalType } from "@/components";
-import { fetchDelegations, fetchProposal, fetchValidators } from "@/hooks";
+import React, { useState, useEffect } from "react";
+import { Proposal, Sandbox, MySpace, WeightedVoting, ProposalType } from "../../../components";
+import { fetchDelegations, fetchProposal, fetchValidators } from "../../../hooks";
 import Link from "next/link";
 
 export interface Validator {

@@ -1,3 +1,5 @@
+import React from "react";
+
 export const Astronaut = (props: any) => (
   <svg
     viewBox="0 0 278 255"

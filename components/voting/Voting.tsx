@@ -7,10 +7,9 @@ import {
   Text,
   useColorModeValue,
 } from "@interchain-ui/react";
-import { useModal, fetchProposals, fetchUserVotes } from "@/hooks";
-//import { Proposal } from "@/components";
-import { formatDate } from "@/utils";
-import { useEffect } from "react";
+import { fetchProposals, fetchUserVotes } from "../../hooks";
+import { formatDate } from "../../utils";
+import React, { useEffect } from "react";
 import Link from "next/link";
 
 export interface ProposalType {

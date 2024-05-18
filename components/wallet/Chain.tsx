@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Chains } from "@chain-registry/types";
 import { matchSorter } from "match-sorter";
 import {

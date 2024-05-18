@@ -4,8 +4,8 @@ import { toast } from '@interchain-ui/react';
 import { useChain } from '@cosmos-kit/react';
 import { coins, StdFee } from '@cosmjs/stargate';
 import { Proposal } from "interchain-query/cosmos/gov/v1beta1/gov";
-import { useTx } from '@/hooks';
-import { getCoin } from '@/utils';
+import { useTx } from './useTx';
+import { getCoin } from '../utils';
 
 const MessageComposer = cosmos.gov.v1beta1.MessageComposer;
 

@@ -3,7 +3,7 @@ import { useChain } from '@cosmos-kit/react';
 import { useQueries } from '@tanstack/react-query';
 import { Proposal, ProposalStatus } from 'interchain-query/cosmos/gov/v1beta1/gov';
 import { useQueryHooks, useRpcQueryClient } from '.';
-import { getTitle, paginate, parseQuorum } from '@/utils';
+import { getTitle, paginate, parseQuorum } from '../utils';
 
 (BigInt.prototype as any).toJSON = function () {
   return this.toString();
