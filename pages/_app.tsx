@@ -15,6 +15,7 @@ import { chains, assets } from 'chain-registry';
 import '@interchain-ui/react/styles';
 import '@interchain-ui/react/globalStyles';
 
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
