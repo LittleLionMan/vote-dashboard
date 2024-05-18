@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useChain } from "@cosmos-kit/react";
 import {
-  BasicModal,
   Box,
   GovernanceProposalItem,
   Spinner,
@@ -14,7 +13,7 @@ import { formatDate } from "@/utils";
 import { useEffect } from "react";
 import Link from "next/link";
 
-export interface Proposal {
+export interface ProposalType {
   proposal_id: number;
   chain_id: number;
   time: Date;
@@ -72,10 +71,8 @@ export type VotingProps = {
 
 export function Voting({ chainName }: VotingProps) {
   const { address } = useChain(chainName);
-  const [proposal, setProposal] = useState<Proposal[] | undefined>(undefined);
-  const [proposals, setProposals] = useState<Proposal[]>([]);
+  const [proposals, setProposals] = useState<ProposalType[]>([]);
   const [userVotes, setUserVotes] = useState<UserVote[]>([]);
-  const { modal, open: openModal, close: closeModal, setTitle } = useModal("");
   const [isLoadingData, setIsLoadingData] = useState(true);
 
   useEffect(() => {
@@ -86,7 +83,6 @@ export function Voting({ chainName }: VotingProps) {
 
         const fetchedVotes = await fetchUserVotes(address);
         setUserVotes(fetchedVotes);
-
         setIsLoadingData(false);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -97,18 +93,6 @@ export function Voting({ chainName }: VotingProps) {
 
     fetchData();
   }, [chainName, address]);
-
-function onClickProposal(index: number) {
-    const foundProposal = proposals.find(proposal => proposal.proposal_id === index);
-    if (foundProposal) {
-      setProposal([foundProposal]);
-      setTitle(`#${foundProposal.proposal_id?.toString()} ${foundProposal.title}`);
-    } else {
-      // Handle the case where no proposal with proposal_id === 1 was found
-    }
-    //openModal();
-}
-    
 
   function userVoteDirection(proposal: number) {
     const foundVote = userVotes.find(vote => vote.proposal_id === proposal);
@@ -146,7 +130,6 @@ function onClickProposal(index: number) {
           my="$8"
           key={proposal.proposal_id?.toString() || index}
           position="relative"
-          attributes={{ onClick: () => onClickProposal(proposal.proposal_id) }}
         >
           {userVoteDirection(proposal.proposal_id)
             ?
@@ -176,10 +159,7 @@ function onClickProposal(index: number) {
           />
         </Box>
         <Link 
-          href={{
-            pathname: `/${proposal.proposal_id}`,
-            query: {proposal: JSON.stringify(proposal)},
-          }}
+          href={`${chainName}/${proposal.proposal_id}`}
         >Details</Link>
         </Box>      
       ))}
@@ -215,26 +195,6 @@ function onClickProposal(index: number) {
       <Text fontWeight="600" fontSize="$2xl">Proposals</Text>
 
       {proposals.length == 0 ? Loading : content}
-
-      <BasicModal
-        title={
-          <Box maxWidth="40rem">
-            <Text fontSize="$xl" fontWeight="$bold">{modal.title}</Text>
-          </Box>
-        }
-        isOpen={modal.open}
-        onOpen={openModal}
-        onClose={closeModal}
-      >
-        {/*<Proposal
-          votes={data.votes}
-          proposal={proposal!}
-          quorum={data.quorum!}
-          bondedTokens={data.bondedTokens!}
-          chainName={chainName}
-          onVoteSuccess={refetch}
-      /> */}
-      </BasicModal>
     </Box>
   );
 }
