@@ -1,4 +1,4 @@
-const api = process.env./*NEXT_PUBLIC*/_API_KEY;
+const api = process.env./*NEXT_PUBLIC_*/API_KEY;
 
 export async function fetchProposals(chainName: string) {
     const apiUrl = api + `/chains/${chainName}/proposals`;
