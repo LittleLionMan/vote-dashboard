@@ -153,7 +153,7 @@ function sumDelegatedAmountsByUsers(filteredUsers: FilteredUser[]): number {
         </Text>
       </Box>
       {/* Description */}
-      <Box>
+      <Box mb="3rem">
         <Text
           color="$textSecondary"
           fontSize="$lg"
@@ -174,6 +174,18 @@ function sumDelegatedAmountsByUsers(filteredUsers: FilteredUser[]): number {
             {showMore ? "Show less" : "Show more"}
           </Button>
         </Box>
+      </Box>
+      <Box>
+        <Text
+            color="$textSecondary"
+            fontSize="$lg"
+            fontWeight="$semibold"
+            attributes={{
+              marginBottom: "$8",
+            }}
+          >
+            Distribution by Stake
+        </Text>
       </Box>
       <Box display="flex" gap="$17" marginBottom="$12">
         <Box display="flex" flex="1" flexDirection="column" gap="$4">
@@ -256,6 +268,18 @@ function sumDelegatedAmountsByUsers(filteredUsers: FilteredUser[]): number {
           />
         </Box>
       </Box>
+      <Box>
+        <Text
+            color="$textSecondary"
+            fontSize="$lg"
+            fontWeight="$semibold"
+            attributes={{
+              marginBottom: "$8",
+            }}
+          >
+            Distribution by Votes
+        </Text>
+      </Box>
       <Box display="flex" gap="$17" marginBottom="$12">
         <Box display="flex" flex="1" flexDirection="column" gap="$4">
           <GovernanceVoteBreakdown
@@ -318,6 +342,18 @@ function sumDelegatedAmountsByUsers(filteredUsers: FilteredUser[]): number {
             votePercentage={+(totalSelfStake / total * 100).toFixed(2)}
           />
         </Box>
+      </Box>
+      <Box>
+        <Text
+            color="$textSecondary"
+            fontSize="$lg"
+            fontWeight="$semibold"
+            attributes={{
+              marginBottom: "$8",
+            }}
+          >
+            Distribution dust wallets
+        </Text>
       </Box>
       <Box display="flex" gap="$17" marginBottom="$12">
         <Box display="flex" flex="1" flexDirection="column" gap="$4">
