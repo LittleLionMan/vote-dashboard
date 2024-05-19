@@ -21,7 +21,7 @@ import {
   ButtonRejected,
 } from "./Connect";
 
-export const CHAIN_NAME = "cosmoshub";
+export const CHAIN_NAME = "juno";
 export const CHAIN_NAME_STORAGE_KEY = "selected-chain";
 
 export type WalletProps = {

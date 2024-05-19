@@ -152,6 +152,29 @@ function sumDelegatedAmountsByUsers(filteredUsers: FilteredUser[]): number {
           Proposal {proposal.proposal_id}: {proposal.title}
         </Text>
       </Box>
+      {/* Description */}
+      <Box>
+        <Text
+          color="$textSecondary"
+          fontSize="$lg"
+          fontWeight="$semibold"
+          attributes={{
+            marginBottom: "$8",
+          }}
+        >
+          Description
+        </Text>
+
+        <Text fontSize="$sm" fontWeight="$normal" color="$textSecondary">
+          {showMore ? <Markdown>{description}</Markdown> : renderedDescription}
+        </Text>
+
+        <Box mt="$8" width="100%" display="flex" justifyContent="center">
+          <Button intent="secondary" variant="ghost" onClick={toggleShowMore}>
+            {showMore ? "Show less" : "Show more"}
+          </Button>
+        </Box>
+      </Box>
       <Box display="flex" gap="$17" marginBottom="$12">
         <Box display="flex" flex="1" flexDirection="column" gap="$4">
           <GovernanceVoteBreakdown
@@ -359,44 +382,6 @@ function sumDelegatedAmountsByUsers(filteredUsers: FilteredUser[]): number {
           />
         </Box>
       </Box>      
-      {/* Description */}
-      <Box>
-        <Text
-          color="$textSecondary"
-          fontSize="$lg"
-          fontWeight="$semibold"
-          attributes={{
-            marginBottom: "$8",
-          }}
-        >
-          Description
-        </Text>
-
-        <Text fontSize="$sm" fontWeight="$normal" color="$textSecondary">
-          {showMore ? <Markdown>{description}</Markdown> : renderedDescription}
-        </Text>
-
-        <Box mt="$8" width="100%" display="flex" justifyContent="center">
-          <Button intent="secondary" variant="ghost" onClick={toggleShowMore}>
-            {showMore ? "Show less" : "Show more"}
-          </Button>
-        </Box>
-      </Box>
-      {/*<Table
-        width="100%"
-        aria-label="simple table"
-        mt="$8"
-      >
-        <thead>
-          <tr>
-            <th>Rank:</th>
-            <th>Name:</th>
-            <th>Stake:</th>
-            <th>Vote:</th>
-          </tr>
-        </thead>
-        
-        </Table>*/}
       {/*<ValidatorList
       data={validators}
       columns={[

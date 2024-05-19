@@ -27,6 +27,8 @@ export function ChainSelect({
   const [value, setValue] = useState<string>();
   const [input, setInput] = useState<string>("");
 
+  const chainNames = ["juno"]
+
   const cache = useMemo(
     () =>
       chains.reduce(
@@ -44,7 +46,7 @@ export function ChainSelect({
           value: chain.chain_name,
           label: chain.pretty_name,
         }))
-        .filter((chain) => chain.value && chain.label),
+        .filter((chain) => chain.value && chain.label && chainNames.includes(chain.value)),
       input,
       { keys: ["value", "label"] },
     ), [chains, input]);

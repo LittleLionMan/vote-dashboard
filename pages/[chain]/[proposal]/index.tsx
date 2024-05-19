@@ -1,9 +1,18 @@
 import { useRouter } from "next/router";
-import { Container, Box, Tabs, Skeleton } from "@interchain-ui/react";
+import { 
+    Container, 
+    Box, 
+    Tabs, 
+    Skeleton, 
+    Icon,
+    Text,
+    Combobox,
+} from "@interchain-ui/react";
 import React, { useState, useEffect } from "react";
 import { Proposal, Sandbox, MySpace, WeightedVoting, ProposalType } from "../../../components";
-import { fetchDelegations, fetchProposal, fetchValidators } from "../../../hooks";
+import { fetchDelegations, fetchProposal, fetchProposals, fetchValidators } from "../../../hooks";
 import Link from "next/link";
+
 
 export interface Validator {
     validator_id: number;
@@ -31,19 +40,24 @@ export default function GovInfo() {
     const proposal_id = router.query.proposal;
     const [component, setComponent] = useState(0);
     const [proposal, setProposal] = useState<ProposalType>(() => ({} as ProposalType));
+    const [proposals, setProposals] = useState<ProposalType[]>([]);
     const [validators, setValidators] = useState<Validator[]>([]);
     const [delegations, setDelegations] = useState<Delegation[]>([]);
     const [isLoadingData, setIsLoadingData] = useState(true);
+    const [value, setValue] = useState<string>();
+    const [input, setInput] = useState<string>(`${proposal_id}`);
 
     useEffect(() => {
         async function fetchData() {
             try {
+                const fetchedProposals = await fetchProposals(chainName);
                 const fetchedProposal = await fetchProposal(chainName, proposal_id);
                 const fetchedValidators = await fetchValidators(proposal_id);
                 const fetchedDelegations = await fetchDelegations(proposal_id);
                 fetchedValidators.sort((a: Validator, b: Validator) => b.stake - a.stake);
                 setValidators(fetchedValidators);
                 setProposal(fetchedProposal[0]);
+                setProposals(fetchedProposals);
                 setDelegations(fetchedDelegations);
                 setIsLoadingData(false);
             } catch (error) {
@@ -55,6 +69,16 @@ export default function GovInfo() {
       
           fetchData();
     });
+
+    function createLabel(id: number, title: string) {
+        const word = cutStringAfterFirstWord(title)
+        return `${id}: ${word}`
+    }
+
+    function cutStringAfterFirstWord(inputString: string) {
+        const words = inputString.split(' ');
+        return words[0];
+      }
 
     const handleChange = (selectedOption: any) => {
         setComponent(selectedOption);
@@ -111,36 +135,81 @@ export default function GovInfo() {
       )
 
     const content = contentChoser(component);
-
     return (
-        <Container maxWidth="64rem" attributes={{ py: '$14' }}>
-            <Box width="64rem" height="6rem">
-                <Tabs
-                    onActiveTabChange={handleChange}
-                    defaultActiveTab={0}
-                    tabs={[
-                        {
-                        content: <h1>Overview</h1>,
-                        label: 'Overview'
-                        },
-                        {
-                        content: <h1>Wallet Info</h1>,
-                        label: 'Wallet'
-                        },
-                        {
-                        content: <h1>Weighted Voting</h1>,
-                        label: 'Weighted'
-                        },
-                        {
-                        content: <h1>SandBox</h1>,
-                        label: 'Sandbox'
-                        },
-                        {
-                            content: <Link href='/'><h1>Home</h1></Link>,
-                            label: 'Home'
-                        },
-                    ]}
-                />
+        <Container maxWidth="70rem" attributes={{ py: '$14' }}>
+            <Box display="flex" height="8rem">
+                <Box width="5rem">
+                    <Box mr="2rem">
+                        <Link href="/">
+                            <Icon name="arrowLeftSLine" />
+                                <Text
+                                attributes={{
+                                    display: 'inline-block',
+                                    mt: '$4'
+                                }}
+                                >
+                                Home
+                            </Text>
+                        </Link>
+                    </Box>
+                </Box>
+                <Box width="60rem">
+                    <Tabs
+                        onActiveTabChange={handleChange}
+                        defaultActiveTab={0}
+                        tabs={[
+                            {
+                            content: <h1>Overview</h1>,
+                            label: 'Overview'
+                            },
+                            {
+                            content: <h1>Wallet Info</h1>,
+                            label: 'Wallet'
+                            },
+                            {
+                            content: <h1>Weighted Voting</h1>,
+                            label: 'Weighted'
+                            },
+                            {
+                            content: <h1>SandBox</h1>,
+                            label: 'Sandbox'
+                            },
+                            
+                        ]}
+                    />
+                </Box>
+                <Box width="8rem" ml="2rem">
+                    <Box display="flex" flexDirection="column" gap="$6" width="5rem">
+                        <Combobox
+                            selectedKey={value}
+                            inputValue={input}
+                            onInputChange={(input) => {
+                                setInput(input);
+                                if (!input) setValue(undefined);
+                            }}
+                            onSelectionChange={(value) => {
+                                const name = value as string;
+                                if (name) {
+                                    setValue(name);
+                                    setInput(name);
+                                    router.push(`/${chainName}/${name}`);
+                                }
+                            }}
+                            styleProps={{
+                                width: {
+                                mobile: "100%",
+                                mdMobile: "10rem",
+                                },
+                            }}
+                            >
+                            {proposals.map((proposal) => (
+                                <Combobox.Item key={proposal.proposal_id}>
+                                    {createLabel(proposal.proposal_id, proposal.title)}
+                                </Combobox.Item>
+                            ))}
+                        </Combobox>
+                    </Box>
+                </Box>
             </Box>
             <Box>
                 {isLoadingData ? SkeletonE : content}
