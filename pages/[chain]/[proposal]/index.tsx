@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Container, Box, Tabs } from "@interchain-ui/react";
+import { Container, Box, Tabs, Skeleton } from "@interchain-ui/react";
 import React, { useState, useEffect } from "react";
 import { Proposal, Sandbox, MySpace, WeightedVoting, ProposalType } from "../../../components";
 import { fetchDelegations, fetchProposal, fetchValidators } from "../../../hooks";
@@ -72,7 +72,11 @@ export default function GovInfo() {
                      />
                 );
             case 1:
-                return (<MySpace />);
+                return (
+                    <MySpace
+                        chainName={chainName}
+                    />
+                );
             case 2: 
                 return (<WeightedVoting />);
             case 3:
@@ -81,6 +85,30 @@ export default function GovInfo() {
                 return
         }
     }
+
+      const SkeletonE = (
+        <Box
+            display="flex"
+            flexDirection="column"
+            gap="$4"
+            >
+            <Skeleton
+                borderRadius="$sm"
+                height="$10"
+                width="$26"
+            />
+            <Skeleton
+                borderRadius="$sm"
+                height="$10"
+                width="$30"
+            />
+            <Skeleton
+                borderRadius="$sm"
+                height="$10"
+                width="$20"
+            />
+        </Box>
+      )
 
     const content = contentChoser(component);
 
@@ -115,7 +143,7 @@ export default function GovInfo() {
                 />
             </Box>
             <Box>
-                {content}
+                {isLoadingData ? SkeletonE : content}
             </Box>
         </Container>  
     )
