@@ -50,6 +50,7 @@ export default function GovInfo() {
     useEffect(() => {
         async function fetchData() {
             try {
+                setIsLoadingData(true); 
                 const fetchedProposals = await fetchProposals(chainName);
                 const fetchedProposal = await fetchProposal(chainName, proposal_id);
                 const fetchedValidators = await fetchValidators(proposal_id);
@@ -59,16 +60,16 @@ export default function GovInfo() {
                 setProposal(fetchedProposal[0]);
                 setProposals(fetchedProposals);
                 setDelegations(fetchedDelegations);
-                setIsLoadingData(false);
             } catch (error) {
               console.error('Error fetching data:', error);
               setProposal(() => ({} as ProposalType));
-              setIsLoadingData(false);
+            } finally {
+                setIsLoadingData(false); 
             }
           }
       
           fetchData();
-    });
+    }, [chainName, proposal_id]);
 
     function createLabel(id: number, title: string) {
         const word = cutStringAfterFirstWord(title)
@@ -186,12 +187,13 @@ export default function GovInfo() {
                             inputValue={input}
                             onInputChange={(input) => {
                                 setInput(input);
-                                if (!input) setValue(undefined);
+                                if (!input) setValue('undefined');
                             }}
                             onSelectionChange={(value) => {
                                 const name = value as string;
                                 if (name) {
                                     setValue(name);
+                                    console.log(name);
                                     setInput(name);
                                     router.push(`/${chainName}/${name}`);
                                 }
