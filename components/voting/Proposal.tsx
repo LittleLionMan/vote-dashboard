@@ -40,9 +40,13 @@ export function Proposal({
   const exponent = getExponent(chainName);
   const toggleShowMore = () => setShowMore((v) => !v);
 
+  if (!proposal) {
+    return <div>Loading...</div>;
+  }
+
   const isPassed = proposal.status === 'PROPOSAL_STATUS_PASSED';
-  const isRejected =
-    proposal.status === 'PROPOSAL_STATUS_REJECTED';
+    const isRejected =
+      proposal.status === 'PROPOSAL_STATUS_REJECTED';
 
   const total = proposal.yes_votes + proposal.abstain_votes + proposal.no_votes + proposal.no_with_veto_votes;
   const totalSelfStake = sumDelegatedAmounts(delegations);

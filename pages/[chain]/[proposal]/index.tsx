@@ -136,7 +136,7 @@ export default function GovInfo() {
 
     const content = contentChoser(component);
     return (
-        <Container maxWidth="70rem" attributes={{ py: '$14' }}>
+        <Container maxWidth="64rem" attributes={{ py: '$14' }}>
             <Box display="flex" height="8rem">
                 <Box width="5rem">
                     <Box mr="2rem">
@@ -144,16 +144,17 @@ export default function GovInfo() {
                             <Icon name="arrowLeftSLine" />
                                 <Text
                                 attributes={{
-                                    display: 'inline-block',
-                                    mt: '$4'
+                                    display: 'inline-Block',
+                                    mt: '$2',
+                                    fontSize: "ls"
                                 }}
                                 >
-                                Home
+                                B
                             </Text>
                         </Link>
                     </Box>
                 </Box>
-                <Box width="60rem">
+                <Box width="55rem">
                     <Tabs
                         onActiveTabChange={handleChange}
                         defaultActiveTab={0}
