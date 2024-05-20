@@ -139,7 +139,7 @@ export default function GovInfo() {
     return (
         <Container maxWidth="64rem" attributes={{ py: '$14' }}>
             <Box display="flex" height="8rem">
-                <Box width="5rem">
+                <Box width="3rem">
                     <Box mr="2rem">
                         <Link href="/">
                             <Icon name="arrowLeftSLine" />
@@ -155,7 +155,7 @@ export default function GovInfo() {
                         </Link>
                     </Box>
                 </Box>
-                <Box width="55rem">
+                <Box width="51rem">
                     <Tabs
                         onActiveTabChange={handleChange}
                         defaultActiveTab={0}
@@ -180,7 +180,10 @@ export default function GovInfo() {
                         ]}
                     />
                 </Box>
-                <Box width="8rem" ml="2rem">
+                <Box 
+                    width="8rem" 
+                    ml="2rem"
+                >
                     <Box display="flex" flexDirection="column" gap="$6" width="5rem">
                         <Combobox
                             selectedKey={value}
