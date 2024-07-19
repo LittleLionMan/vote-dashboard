@@ -53,8 +53,8 @@ export default function GovInfo() {
                 setIsLoadingData(true); 
                 const fetchedProposals = await fetchProposals(chainName);
                 const fetchedProposal = await fetchProposal(chainName, proposal_id);
-                const fetchedValidators = await fetchValidators(proposal_id);
-                const fetchedDelegations = await fetchDelegations(proposal_id);
+                const fetchedValidators = await fetchValidators(chainName, proposal_id);
+                const fetchedDelegations = await fetchDelegations(chainName, proposal_id);
                 fetchedValidators.sort((a: Validator, b: Validator) => b.stake - a.stake);
                 setValidators(fetchedValidators);
                 setProposal(fetchedProposal[0]);

@@ -51,8 +51,8 @@ export async function fetchUserVotes(address: string | undefined) {
     }
 }
 
-export async function fetchValidators(proposalId: string | string[] | undefined) {
-    const apiUrl = api + `/validators/${proposalId}`;
+export async function fetchValidators(chainName: string | string[] | undefined, proposalId: string | string[] | undefined) {
+    const apiUrl = api + `/chains/${chainName}/validators/${proposalId}`;
 
     try {
         const response = await fetch(apiUrl);
@@ -68,8 +68,8 @@ export async function fetchValidators(proposalId: string | string[] | undefined)
     }
 }
 
-export async function fetchDelegations(proposalId: string | string[] | undefined) {
-    const apiUrl = api + `/delegations/${proposalId}`;
+export async function fetchDelegations(chainName: string | string[] | undefined, proposalId: string | string[] | undefined) {
+    const apiUrl = api + `/chains/${chainName}/delegations/${proposalId}`;
 
     try {
         const response = await fetch(apiUrl);

@@ -50,28 +50,29 @@ export function Proposal({
 
   const total = proposal.yes_votes + proposal.abstain_votes + proposal.no_votes + proposal.no_with_veto_votes;
   const totalSelfStake = sumDelegatedAmounts(delegations);
-  const totalVotes = filterDelegations(delegations).length;
-  const filteredUsers = filterUsersByDelegatedAmount(delegations, 1, exponent);
-  const totalDustVotes = filteredUsers.length
-  const totalDustStake = sumDelegatedAmountsByUsers(filteredUsers);
-  const yesVotes = filterDelegations(delegations, "VOTE_OPTION_YES").length;
-  const noVotes = filterDelegations(delegations, "VOTE_OPTION_NO").length;
-  const abstainVotes = filterDelegations(delegations, "VOTE_OPTION_ABSTAIN").length;
-  const noWithVetoVotes = filterDelegations(delegations, "VOTE_OPTION_NO_WITH_VETO").length;
+  const totalVotes = filterUniqueDelegations(delegations).length;
+  const dustWallets = filterUsersByDelegatedAmount(delegations, 1, exponent);
+  const zeroStake = filterUsersByDelegatedAmount(delegations, 0, exponent).length;
+  const totalDustVotes = dustWallets.length
+  //const totalDustStake = sumDelegatedAmountsByUsers(dustWallets);
+  const yesVotes = filterUniqueDelegations(delegations, "VOTE_OPTION_YES").length;
+  const noVotes = filterUniqueDelegations(delegations, "VOTE_OPTION_NO").length;
+  const abstainVotes = filterUniqueDelegations(delegations, "VOTE_OPTION_ABSTAIN").length;
+  const noWithVetoVotes = filterUniqueDelegations(delegations, "VOTE_OPTION_NO_WITH_VETO").length;
   const dustYesVotes = filterUsersByDelegatedAmount(delegations, 1, exponent, "VOTE_OPTION_YES").length;
   const dustNoVotes = filterUsersByDelegatedAmount(delegations, 1, exponent, "VOTE_OPTION_NO").length;
   const dustAbstainVotes = filterUsersByDelegatedAmount(delegations, 1, exponent, "VOTE_OPTION_ABSTAIN").length;
   const dustNoWithVetoVotes = filterUsersByDelegatedAmount(delegations, 1, exponent, "VOTE_OPTION_NO_WITH_VETO").length;
   const turnout = total / proposal.bonded_tokens;
 
-  /* function calculateTotalStake(validators: Validator[]): number {
+  function calculateTotalStake(validators: Validator[]): number {
     return validators.reduce((totalStake, validator) => totalStake + validator.stake, 0);
 }
 
   const stake1 = proposal.bonded_tokens
-  const stake2= calculateTotalStake(validators); */
+  const stake2 = calculateTotalStake(validators);
 
-  function filterDelegations(delegations: Delegation[], voteDirection?: string): Delegation[] {
+  function filterUniqueDelegations(delegations: Delegation[], voteDirection?: string): Delegation[] {
       let uniqueUserIds: Set<number> = new Set();
 
         // Filter delegations based on vote direction and add unique user IDs to the set
@@ -80,7 +81,6 @@ export function Proposal({
                 uniqueUserIds.add(delegation.user_id);
             }
         });
-
         // Filter delegations based on unique user IDs
         let filteredDelegations: Delegation[] = [];
         delegations.forEach(delegation => {
@@ -89,7 +89,6 @@ export function Proposal({
                 uniqueUserIds.delete(delegation.user_id); // Remove user ID from set to ensure uniqueness
             }
         });
-
         return filteredDelegations;
     }
 
@@ -156,6 +155,10 @@ function sumDelegatedAmountsByUsers(filteredUsers: FilteredUser[]): number {
           Proposal {proposal.proposal_id}: {proposal.title}
         </Text>
       </Box>
+      {/*<Box>
+        <Text>{(stake1/1000000).toFixed(2)} Bonded</Text>
+        <Text>{(stake2/1000000).toFixed(2)} Calculated</Text>
+      </Box>*/}
       {/* Description */}
       <Box mb="3rem">
         <Text
@@ -417,8 +420,8 @@ function sumDelegatedAmountsByUsers(filteredUsers: FilteredUser[]): number {
           />
           <GovernanceResultCard
             resultType="info"
-            label="Amount of Stake"
-            votePercentage={+(totalDustStake / total * 100).toFixed(6)}
+            label="Zero Stake"
+            votePercentage={+(zeroStake / totalVotes * 100).toFixed(2)}
           />
         </Box>
       </Box>      
